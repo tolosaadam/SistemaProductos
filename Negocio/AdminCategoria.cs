@@ -15,17 +15,18 @@ namespace Negocio
             return DACCategoria.CmdSelect();
             
         }
-        public static bool Crear(Categoria categoria)
+        public static int Crear(Categoria categoria)
         {
-            bool filasAfectadas = DACCategoria.CmdInsert(categoria);
-            if (filasAfectadas)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            int idDevuelto = DACCategoria.CmdInsert(categoria);
+            return idDevuelto;
+            //if (idDevuelto > 0)
+            //{
+            //    return idDevuelto;
+            //}
+            //else
+            //{
+            //    return 0;    
+            //}
         }
     }
 }

@@ -53,9 +53,9 @@ namespace Datos
             
         }
 
-        public static bool CmdInsert(Producto producto)
+        public static int CmdInsert(Producto producto)
         {
-            string query = "INSERT INTO dbo.Productos (Nombre ,Precio ,IdCategoria) VALUES (@Nombre, @Precio, @IdCategoria)";
+            string query = "INSERT INTO dbo.Productos (Nombre ,Precio ,IdCategoria) VALUES (@Nombre, @Precio, @IdCategoria); SELECT SCOPE_IDENTITY()";
 
             SqlCommand command = new SqlCommand(query, AdminDB.ConectarDB());
             
@@ -64,18 +64,18 @@ namespace Datos
             command.Parameters.Add("@IdCategoria", SqlDbType.Int).Value = producto.IdCategoria;
             
 
-            int filasAfectadas = command.ExecuteNonQuery(); //Invocar: inser into-update-delete
+            object filasAfectadas = command.ExecuteScalar(); //Invocar: inser into-update-delete
 
             //Cerrar connecion de la DB
             AdminDB.ConectarDB().Close();
 
-            if (filasAfectadas > 0)
+            if (filasAfectadas != null)
             {
-                return true;
+                return Convert.ToInt32(filasAfectadas);
             }
             else
             {
-                return false;
+                return 0;
             }
             
         }

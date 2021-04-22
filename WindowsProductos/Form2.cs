@@ -24,8 +24,8 @@ namespace WindowsProductos
         private void button2_Click(object sender, EventArgs e)
         {
             Producto producto = new Producto("Mouse", Convert.ToDecimal(5.5), 2);
-            bool result = AdminProducto.Crear(producto);
-            if (result)
+            int result = AdminProducto.Crear(producto);
+            if (result > 0)
             {
                 MessageBox.Show("OK");
                 ShowAllProducts();
@@ -69,8 +69,8 @@ namespace WindowsProductos
         private void button3_Click(object sender, EventArgs e)
         {
             Categoria categoria = new Categoria("Periferico");
-            bool result = AdminCategoria.Crear(categoria);
-            if (result)
+            int result = AdminCategoria.Crear(categoria);
+            if (result > 0)
             {
                 MessageBox.Show("OK");
                 ShowAllCategories();

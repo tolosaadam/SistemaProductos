@@ -20,17 +20,11 @@ namespace Negocio
             return DACProducto.CmdSelect(idCategoria);
             
         }
-        public static bool Crear(Producto producto)
+        public static int Crear(Producto producto)
         {
-            bool filasAfectadas = DACProducto.CmdInsert(producto);
-            if (filasAfectadas)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            int idDevuelto = DACProducto.CmdInsert(producto);
+            return idDevuelto;
+
         }
     }
 }

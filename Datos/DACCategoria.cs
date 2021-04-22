@@ -27,28 +27,26 @@ namespace Datos
 
             return lista;
         }
-        public static bool CmdInsert(Categoria categoria)
+        public static int CmdInsert(Categoria categoria)
         {
-            string query = "INSERT INTO dbo.Categoria (Nombre) VALUES (@Nombre)";
+            string query = "INSERT INTO dbo.Categoria (Nombre) VALUES (@Nombre); SELECT SCOPE_IDENTITY()"; 
 
             SqlCommand command = new SqlCommand(query, AdminDB.ConectarDB());
 
             command.Parameters.Add("@Nombre", SqlDbType.VarChar, 50).Value = categoria.Nombre;
-            
 
-
-            int filasAfectadas = command.ExecuteNonQuery(); //Invocar: inser into-update-delete
+            object filasAfectadas = command.ExecuteScalar(); //Invocar: inser into-update-delete
 
             //Cerrar connecion de la DB
             AdminDB.ConectarDB().Close();
 
-            if (filasAfectadas > 0)
+            if (filasAfectadas != null)
             {
-                return true;
+                return Convert.ToInt32(filasAfectadas);
             }
             else
             {
-                return false;
+                return 0;
             }
         }
     }
